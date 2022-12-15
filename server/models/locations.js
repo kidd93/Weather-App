@@ -1,12 +1,12 @@
 const { Schema } = require('mongoose');
 
-const locationSchema = new Schema(
+const LocationsSchema = new Schema(
     {
-        locationId: {
+        LocationsId: {
             type: String,
-            required: True
+            required: true
         }
     }
 )
 
-module.exports = locationSchema;
+module.exports = LocationsSchema;

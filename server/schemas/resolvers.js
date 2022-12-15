@@ -7,10 +7,10 @@ const resolvers = {
         me: async (parent, args, context) => {
             if (context.user) {
                 const userData = await User.findOne({
-                    _id: context.user_id
+                    _id: context.user._id
                 })
                 .select('-__v -password')
-                .populate('savedLocations');
+                .populate('saveLocations');
 
                 return userData;
             }
@@ -18,7 +18,7 @@ const resolvers = {
         }
     },
 
-    Mutations: {
+    Mutation: {
         addUser: async (parent, args) => {
             const user = await User.create(args);
             const token = signToken(user);
@@ -38,8 +38,10 @@ const resolvers = {
                 throw new AuthenticationError('Credentials are incorrect');
             }
             const token = signToken(user);
+            return { token, user };
         },
-         saveLocation: async (parent, args, context) => {
+
+         saveLocations: async (parent, args, context) => {
             if (context.user) {
                 const updatedUser = await User.findByIdAndUpdate(
                     { _id: context.user._id },
@@ -50,7 +52,7 @@ const resolvers = {
             }
             throw new AuthenticationError('Please login first')
          },
-         removeLocation: async (parent, args, context) => {
+         removeLocations: async (parent, args, context) => {
             if (context.user) {
                 const updatedUser = User.findOneAndUpdate(
                     { _id: context.user._id },
