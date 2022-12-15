@@ -5,10 +5,10 @@ const typeDefs = gql`
 type User {
     _id: ID 
     email: String
-    savedLocations: [locations]
+    savedLocations: [Locations]
 }
 
-type Location {
+type Locations {
     id: String
     image: String
 }
@@ -23,10 +23,10 @@ type Query {
 }
 
 type Mutation {
-    login(email: Sting!, password: String!): Auth
+    login(email: String!, password: String!): Auth
     addUser(email: String!, password: String!): Auth
-    savedLocation(id: String!, image: String): User
-    removeLocation(id: String!)
+    saveLocations(id: String!, image: String): User
+    removeLocations(id: String!): User
 }
 `;
 
